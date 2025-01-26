@@ -1,16 +1,10 @@
 {
   "student": [
     {
-      "id": "4920",
-      "name": "Komang",
-      "class": "12 TKJ 1",
-      "major": "Rekayasa Perangkat Lunak"
-    },
-    {
       "id": "1",
-      "name": "Komang",
+      "name": "Cecep",
       "class": "12 TKJ 1",
-      "major": "Rekayasa Perangkat Lunak"
+      "major": "Teknik Komputer Jaringan"
     }
   ]
 }

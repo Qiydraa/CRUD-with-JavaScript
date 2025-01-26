@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi data siswa</title>
-    <Style>
+    <style>
         table, tr, th, td {
             border: 1px solid black;
             padding: 5px;
         }
-    </Style>
+    </style>
 </head>
 <body>
     <h2>Aplikasi Pendataan Siswa</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     
     <div>
-        <input type="text" placeholder="Tulisakan nama lengkap disini..">
-        <input type="text" placeholder="Tulisakan kelas lengkap disini..">
+        <input type="text" placeholder="Tuliskan nama lengkap di sini..">
+        <input type="text" placeholder="Tuliskan kelas lengkap di sini..">
         <select>
             <option>Pilih</option>
             <option value="Teknik Komputer Jaringan">TKJ</option>
@@ -36,18 +36,55 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Komang</td>
-                <td>12 TKJ 1</td>
-                <td>Rekayasa Perangkat Lunak</td>
-                <td>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
+        <tbody id="result">
+            <!-- Data siswa akan ditambahkan di sini -->
         </tbody>
     </table>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const getData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/student');
+                let bucket = '';
+                let students = response.data;
+
+                if(students.length > 0){
+                    for (let i = 0; i < students.length; i++) {
+                        bucket += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${students[i].name}</td>
+                                <td>${students[i].class}</td>
+                                <td>${students[i].major}</td>
+                                <td>
+                                    <button>Edit</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                } else {
+                    bucket += ` 
+                         <tr>
+                            <td colspan="5" style="text-align:center">Data tidak ditemukan</td>
+                        </tr>
+                `;
+                }
+
+                
+
+                document.getElementById('result').innerHTML = bucket;
+            } catch (error) {
+                let bucket = `
+                         <tr>
+                            <td colspan="5" style="text-align:center">${error.message}</td>
+                        </tr>
+                `;
+                document.getElementById('result').innerHTML = bucket;
+            }
+        };
+
+        getData();
+    </script>
 </body>
 </html>
